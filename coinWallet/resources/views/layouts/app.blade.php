@@ -72,12 +72,12 @@
                             <li class="divider"></li>
                             <li><a tabindex="-1" class="visible-phone" href="#">Settings</a></li>
                             <li class="divider visible-phone"></li>
-                            <li><a tabindex="-1" href="sign-in.html">Logout</a></li>
+                            <li><a tabindex="-1" href="{{ url('/login') }}">Logout</a></li>
                         </ul>
                     </li>
 
                 </ul>
-                <a class="brand" href="index.html"><span class="first">Your</span> <span class="second">Company</span></a>
+                <a class="brand" href="{{ url('/dashboard') }}"><span class="first">Your</span> <span class="second">Company</span></a>
             </div>
         </div>
 
@@ -90,10 +90,9 @@
                 <i class="icon-dashboard"></i>Dashboard<i class="icon-chevron-up"></i>
             </a>
             <ul id="dashboard-menu" class="nav nav-list collapse in">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="{{ url('/coinbase/transactions') }}">Transactions</a></li>
-                <li><a href="user.html">Sample Item</a></li>
-                <li><a href="media.html">Media</a></li>
+                <li><a href="{{ url('/dashboard') }}">Home</a></li>
+                <li><a href="{{ url('/coins') }}">Coins</a></li>
+                <li><a href="{{ url('/transactions') }}">Transactions</a></li>
                 <li><a href="calendar.html">Calendar</a></li>
             </ul>
 
@@ -101,7 +100,7 @@
                 <i class="icon-briefcase"></i>Coinbase<i class="icon-chevron-up"></i>
             </a>
             <ul id="accounts-menu" class="nav nav-list collapse">
-                <li><a href="sign-in.html">Sign In</a></li>
+                <li><a href="{{ url('/login') }}">Sign In</a></li>
                 <li><a href="sign-up.html">Sign Up</a></li>
                 <li><a href="reset-password.html">Reset Password</a></li>
             </ul>
@@ -110,7 +109,7 @@
                 <i class="icon-exclamation-sign"></i>CoinMarketCap<i class="icon-chevron-up"></i>
             </a>
             <ul id="error-menu" class="nav nav-list collapse">
-                <li><a href="403.html">403 page</a></li>
+                <li><a href="{{ url('/quotes') }}">Latest Quotes</a></li>
                 <li><a href="404.html">404 page</a></li>
                 <li><a href="500.html">500 page</a></li>
                 <li><a href="503.html">503 page</a></li>

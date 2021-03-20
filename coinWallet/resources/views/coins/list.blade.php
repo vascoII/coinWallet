@@ -2,18 +2,18 @@
 
 @section('content')
     <div class="header">
-        <h1 class="page-title">Transactions</h1>
+        <h1 class="page-title">List Coins</h1>
     </div>
 
     <ul class="breadcrumb">
         <li><a href="{{ url('/dashboard') }}">Home</a> <span class="divider">/</span></li>
-        <li class="active">Transactions</li>
+        <li class="active">Coins</li>
     </ul>
 
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="btn-toolbar">
-                <button class="btn btn-primary"><i class="icon-plus"></i> New Transaction</button>
+                <button class="btn btn-primary"><i class="icon-plus"></i> New Coin</button>
                 <button class="btn">Import</button>
                 <button class="btn">Export</button>
                 <div class="btn-group">
@@ -22,36 +22,24 @@
             <div class="well">
                 <table class="table">
                     <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Symbol</th>
-                            <th>Type</th>
-                            <th>Code reference</th>
-                            <th>Payment method</th>
-                            <th>Date</th>
-                            <th>Amount</th>
-                            <th>Sub total</th>
-                            <th>Fees</th>
-                            <th>Total</th>
-                            <th>Exchange Rate</th>
-                        </tr>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Symbol</th>
+                        <th>Slug</th>
+                        <th>Category</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        @foreach($transactions as $transaction)
+                    @foreach($coins as $coin)
                         <tr>
-                            <td>{{ $transaction->getId() }}</td>
-                            <td>{{ $transaction->getSymbol() }}</td>
-                            <td>{{ $transaction->getType() }}</td>
-                            <td>{{ $transaction->getReferenceCode() }}</td>
-                            <td>{{ $transaction->getPaymentMethod() }}</td>
-                            <td>{{ $transaction->getDateHour() }}</td>
-                            <td>{{ $transaction->getAmount() }}</td>
-                            <td>{{ $transaction->getSubTotal() / 100}}</td>
-                            <td>{{ $transaction->getFees() / 100 }}</td>
-                            <td>{{ $transaction->getTotal() / 100 }}</td>
-                            <td>{{ $transaction->getExchangeRate() . ' €' }}</td>
+                            <td>{{ $coin->getId() }}</td>
+                            <td><a href="{{ url('coin/' . $coin->getId()) }}">{{ $coin->getName() }}</a></td>
+                            <td>{{ $coin->getSymbol() }}</td>
+                            <td>{{ $coin->getSlug() }}</td>
+                            <td>{{ $coin->getCategory() }}</td>
                         </tr>
-                        @endforeach
+                    @endforeach
                     </tbody>
                 </table>
             </div>

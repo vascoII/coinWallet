@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Http\Controllers\Actions\Coinbase;
+namespace App\Http\Controllers\Actions;
 
 use App\Domain\Repositories\Coinbase\TransactionRepository;
 use App\Http\Responders\Coinbase\ListTransactionsResponder;

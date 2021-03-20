@@ -45,7 +45,7 @@ class TransactionSeeder extends Seeder
                 'date_hour' => '2021-02-18 14:30',
                 'amount' => 472.9388693,
                 'exchange_rate' => 0.4166,
-                'sub_total' => 197.01,
+                'sub_total' => 19701,
                 'fees' => 299,
                 'total' => 20000
             ], [
@@ -56,7 +56,7 @@ class TransactionSeeder extends Seeder
                 'date_hour' => '2021-02-18 14:34',
                 'amount' => 0.82085440,
                 'exchange_rate' => 240.01,
-                'sub_total' => 197.01,
+                'sub_total' => 19701,
                 'fees' => 299,
                 'total' => 20000
             ], [
@@ -67,7 +67,7 @@ class TransactionSeeder extends Seeder
                 'date_hour' => '2021-02-18 14:35',
                 'amount' => 0.02739101,
                 'exchange_rate' => 43166.72,
-                'sub_total' => 1182.38,
+                'sub_total' => 118238,
                 'fees' => 1762,
                 'total' => 120000
             ]

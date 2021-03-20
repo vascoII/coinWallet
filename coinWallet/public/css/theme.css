@@ -714,7 +714,7 @@ body .http-error p {
   text-align: center;
 }
 .stat-widget-container .stat-widget {
-  width: 25%;
+  width: 14%;
   float: left;
 }
 .stat-widget-container .stat-widget .stat-button {
@@ -727,9 +727,27 @@ body .http-error p {
   font-weight: bold;
   color: #999;
 }
+.title_green {
+    font-size: 2em;
+    font-weight: bold;
+    color: #006600;
+}
+.title_red {
+    font-size: 2em;
+    font-weight: bold;
+    color: #990000;
+}
 .stat-widget-container .stat-widget .stat-button .detail {
   font-size: 1.5em;
   color: #555;
+}
+.detail_green {
+    font-size: 1.5em;
+    color: #006600;
+}
+.detail_red {
+    font-size: 1.5em;
+    color: #990000;
 }
 table.table.list tr:first-child td {
   border-top: 0px;

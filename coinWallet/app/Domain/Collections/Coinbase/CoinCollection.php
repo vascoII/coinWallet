@@ -2,15 +2,15 @@
 
 namespace App\Domain\Collections\Coinbase;
 
-use App\Domain\Entities\Coinbase\Transaction;
+use App\Domain\Entities\Coinbase\Coin;
 
-class TransactionCollection
+class CoinCollection
 {
     private array $list;
 
-    public function add(Transaction $transaction): void
+    public function add(Coin $coin): void
     {
-        $this->list[] = $transaction;
+        $this->list[] = $coin;
     }
 
     public function all(): array

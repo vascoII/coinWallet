@@ -1,6 +1,10 @@
 <?php
 
-use App\Http\Controllers\Actions\Coinbase\ListTransactionsAction;
+use App\Http\Controllers\Actions\CoinMarketCap\Cryptocurrency\ListQuotesAction;
+use App\Http\Controllers\Actions\GetCoinsByIdAction;
+use App\Http\Controllers\Actions\ListTransactionsAction;
+use App\Http\Controllers\Actions\ListCoinsAction;
+use App\Http\Controllers\Actions\DashboardAction;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,4 +25,18 @@ Route::get('/', function () {
 /**
  * COINBASE
  */
-Route::get('/coinbase/transactions', ListTransactionsAction::class);
+Route::get('/dashboard', DashboardAction::class);
+Route::get('/transactions', ListTransactionsAction::class);
+Route::get('/coins', ListCoinsAction::class);
+Route::get('/coin/{id}',GetCoinsByIdAction::class);
+
+
+/**
+ * COINBASE
+ */
+
+
+/**
+ * COINMARKETCAP
+ */
+Route::get('/quotes', ListQuotesAction::class);
