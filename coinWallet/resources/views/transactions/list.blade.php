@@ -13,7 +13,7 @@
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="btn-toolbar">
-                <button class="btn btn-primary"><i class="icon-plus"></i> New Transaction</button>
+                <button class="btn btn-primary"><a href="{{ url('/transactions/add') }}"><i class="icon-plus"></i>New Transaction</a></button>
                 <button class="btn">Import</button>
                 <button class="btn">Export</button>
                 <div class="btn-group">
@@ -39,17 +39,31 @@
                     <tbody>
                         @foreach($transactions as $transaction)
                         <tr>
-                            <td>{{ $transaction->getId() }}</td>
-                            <td>{{ $transaction->getSymbol() }}</td>
-                            <td>{{ $transaction->getType() }}</td>
-                            <td>{{ $transaction->getReferenceCode() }}</td>
-                            <td>{{ $transaction->getPaymentMethod() }}</td>
-                            <td>{{ $transaction->getDateHour() }}</td>
-                            <td>{{ $transaction->getAmount() }}</td>
-                            <td>{{ $transaction->getSubTotal() / 100}}</td>
-                            <td>{{ $transaction->getFees() / 100 }}</td>
-                            <td>{{ $transaction->getTotal() / 100 }}</td>
-                            <td>{{ $transaction->getExchangeRate() . ' €' }}</td>
+                            @if(in_array($transaction->getType(), ['buy', 'earn']))
+                                <td>{{ $transaction->getId() }}</td>
+                                <td>{{ $transaction->getSymbol() }}</td>
+                                <td>{{ $transaction->getType() }}</td>
+                                <td>{{ $transaction->getReferenceCode() }}</td>
+                                <td>{{ $transaction->getPaymentMethod() }}</td>
+                                <td>{{ $transaction->getDateHour() }}</td>
+                                <td>{{ $transaction->getAmount() / 100000000 }} </td>
+                                <td>{{ $transaction->getSubTotal() / 100000000  . ' €' }}</td>
+                                <td>{{ $transaction->getFees() / 100000000  . ' €' }}</td>
+                                <td>{{ $transaction->getTotal() / 100000000 . ' €'  }}</td>
+                                <td>{{ $transaction->getExchangeRate() / 100000000  . ' € / ' .  $transaction->getSymbol() }}</td>
+                            @elseif(in_array($transaction->getType(), ['exchange']))
+                                <td>{{ $transaction->getId() }}</td>
+                                <td>{{ $transaction->getSymbol() }}</td>
+                                <td>{{ $transaction->getType() }}</td>
+                                <td>{{ $transaction->getReferenceCode() }}</td>
+                                <td>{{ $transaction->getPaymentMethod() }}</td>
+                                <td>{{ $transaction->getDateHour() }}</td>
+                                <td>{{ $transaction->getAmount() / 100000000 }} </td>
+                                <td>{{ $transaction->getSubTotal() / 100000000  . ' €' }}</td>
+                                <td>{{ $transaction->getFees() / 100000000  . ' €' }}</td>
+                                <td>{{ $transaction->getTotal() / 100000000 . ' €'  }}</td>
+                                <td>{{ $transaction->getExchangeRate() / 100000000 }}</td>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>

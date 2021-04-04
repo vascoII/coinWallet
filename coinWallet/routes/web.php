@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\Actions\Coinbase\AddTransactionsAction;
+use App\Http\Controllers\Actions\Coinbase\ChartsAction;
+use App\Http\Controllers\Actions\Coinbase\CurrentValueAction;
+use App\Http\Controllers\Actions\Coinbase\GoalsAction;
+use App\Http\Controllers\Actions\CoinMarketCap\Cryptocurrency\GetQuotesBySymbolAction;
 use App\Http\Controllers\Actions\CoinMarketCap\Cryptocurrency\ListQuotesAction;
 use App\Http\Controllers\Actions\GetCoinsByIdAction;
 use App\Http\Controllers\Actions\ListTransactionsAction;
@@ -22,21 +27,22 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-/**
- * COINBASE
- */
 Route::get('/dashboard', DashboardAction::class);
 Route::get('/transactions', ListTransactionsAction::class);
+Route::get('/transactions/add', AddTransactionsAction::class);
+Route::post('/transactions/add', AddTransactionsAction::class);
 Route::get('/coins', ListCoinsAction::class);
 Route::get('/coin/{id}',GetCoinsByIdAction::class);
 
-
 /**
  * COINBASE
  */
-
+Route::get('/goals', GoalsAction::class);
+Route::get('/currentvalue', CurrentValueAction::class);
+Route::get('/charts', ChartsAction::class);
 
 /**
  * COINMARKETCAP
  */
 Route::get('/quotes', ListQuotesAction::class);
+Route::get('/quote/{symbol}',GetQuotesBySymbolAction::class);

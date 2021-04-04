@@ -5,11 +5,13 @@ namespace App\Providers;
 use App\Domain\Repositories\Coinbase\TransactionRepository as TransactionRepositoryInterface;
 use App\Domain\Repositories\CoinMarketCap\QuoteRepository as QuoteRepositoryInterface;
 use App\Domain\Repositories\Coinbase\CoinRepository as CoinRepositoryInterface;
+use App\Domain\Services\Coinbase\GetAlertInfoService as GetAlertInfoServiceInterface;
 use App\Domain\Services\CoinMarketCap\QuoteLatestService as QuoteLatestServiceInterface;
 use App\Domain\Services\MetaDataService as MetaDataServiceInterface;
 use App\Infrastructure\Repositories\Coinbase\CoinRepository;
 use App\Infrastructure\Repositories\Coinbase\TransactionRepository;
 use App\Infrastructure\Repositories\CoinMarketCap\QuoteRepository;
+use App\Infrastructure\Service\Coinbase\GetAlertInfoService;
 use App\Infrastructure\Service\CoinMarketCap\MetaDataCoinMarketCapService;
 use App\Infrastructure\Service\CoinMarketCap\QuoteLatestService;
 use Illuminate\Support\ServiceProvider;
@@ -31,6 +33,7 @@ class AppServiceProvider extends ServiceProvider
         /** SERVICE */
         $this->app->bind(MetaDataServiceInterface::class, MetaDataCoinMarketCapService::class);
         $this->app->bind(QuoteLatestServiceInterface::class, QuoteLatestService::class);
+        $this->app->bind(GetAlertInfoServiceInterface::class, GetAlertInfoService::class);
     }
 
     /**

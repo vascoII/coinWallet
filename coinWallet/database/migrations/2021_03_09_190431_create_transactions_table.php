@@ -13,19 +13,20 @@ class CreateTransactionsTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('transactions');
         if (!Schema::hasTable('transactions')) {
             Schema::create('transactions', function (Blueprint $table) {
                 $table->id();
                 $table->string('symbol');
-                $table->enum('type', ['buy', 'sell', 'earn']);
+                $table->enum('type', ['buy', 'sell', 'earn', 'exchange']);
                 $table->string('reference_code')->unique();
                 $table->string('payment_method')->nullable();
                 $table->dateTime('date_hour');
-                $table->float('amount');
-                $table->float('exchange_rate');
-                $table->integer('sub_total');
-                $table->integer('fees');
-                $table->integer('total');
+                $table->bigInteger('amount');
+                $table->bigInteger('exchange_rate');
+                $table->bigInteger('sub_total');
+                $table->bigInteger('fees');
+                $table->bigInteger('total');
                 $table->timestamps();
                 $table->softDeletes();
             });

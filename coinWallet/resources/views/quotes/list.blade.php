@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="header">
-        <h1 class="page-title">Transactions</h1>
+        <h1 class="page-title">Quotes</h1>
     </div>
 
     <ul class="breadcrumb">
@@ -13,8 +13,8 @@
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="btn-toolbar">
-                <button class="btn">Import</button>
-                <button class="btn">Export</button>
+                <button class="btn">USD $</button>
+                <button class="btn">EUR €</button>
                 <div class="btn-group">
                 </div>
             </div>
@@ -23,22 +23,24 @@
                     <thead>
                         <tr>
                             <th>Symbol</th>
-                            <th>Currency</th>
                             <th>Price</th>
-                            <th>Volume 24h</th>
-                            <th>Percent Change 1h</th>
-                            <th>Percent Change 24h</th>
+                            <th>24h %</th>
+                            <th>7d %</th>
+                            <th>Market Cap</th>
+                            <th>Volume(24h)</th>
+                            <th>Circulating Supply</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($quotes as $quote)
                         <tr>
-                            <td>{{ $quote->getSymbol() }}</td>
-                            <td>{{ $quote->getCurrency() }}</td>
-                            <td>{{ $quote->getPrice()  . ' €' }}</td>
-                            <td>{{ $quote->getVolume24h() }}</td>
-                            <td>{{ $quote->getPercentChange1h()}}</td>
+                            <td><a href="{{ url('quote/' . $quote->getSymbol()) }}">{{ $quote->getSymbol() }}</a></td>
+                            <td>{{ number_format($quote->getPrice(), 2, ',', ' ') }} @if($quote->getCurrency() === 'USD') {{ ' $' }} @else {{ ' €' }} @endif</td>
                             <td>{{ $quote->getPercentChange24h()}}</td>
+                            <td>{{ $quote->getPercentChange7d()}}</td>
+                            <td>{{ number_format($quote->getMarketCap(), 2, ',', ' ') }}</td>
+                            <td>{{ number_format($quote->getVolume24h(), 2, ',', ' ') }}</td>
+                            <td>{{ number_format($quote->getCirculatingSupply(), 2, ',', ' ') }}</td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -54,7 +56,7 @@
                     <li><a href="#">Next</a></li>
                 </ul>
             </div>
-            
+
             <footer>
                 <hr />
                 <p class="pull-right">Design by <a href="#" target="_blank">Rubus Data</a></p>

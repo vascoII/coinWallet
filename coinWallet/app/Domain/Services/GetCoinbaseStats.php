@@ -3,30 +3,65 @@
 
 namespace App\Domain\Services;
 
-
-use App\Domain\Collections\Coinbase\TransactionCollection;
+use App\Domain\Entities\Coinbase\Transaction;
 use App\Domain\Entities\Utils\Stats;
+use App\Domain\Repositories\Coinbase\TransactionRepository;
+use App\Domain\Repositories\CoinMarketCap\QuoteRepository;
 
 class GetCoinbaseStats
 {
+    public TransactionRepository $transactionRepository;
+    public QuoteRepository $quoteRepository;
 
-    public function __invoke(TransactionCollection $transactions): Stats
+    const HUNDRED_MILLION = 100000000;
+
+    public const BUY = 'buy';
+    public const SELL = 'sell';
+    public const EARN = 'earn';
+    public const FEES = 'fees';
+    public const GAIN = 'gain';
+    public const LOSSES = 'losses';
+
+    public function __construct(TransactionRepository $transactionRepository, QuoteRepository $quoteRepository)
     {
-        $sumBuy = 0;
-        $sumFees = 0;
-        foreach ($transactions->all() as $transaction) {
-            $sumBuy += $transaction->getSubTotal();
-            $sumFees += $transaction->getFees();
-        }
+        $this->transactionRepository = $transactionRepository;
+        $this->quoteRepository = $quoteRepository;
+    }
+
+    public function __invoke(): Stats
+    {
+        $resTransaction = $this->transactionRepository->findBuyFeesEar();
+        $resAmount = $this->transactionRepository->findAllAmount();
+        $resQuote = $this->quoteRepository->findLastValues($resAmount);
+
+        [$gain, $losses, $currentValue] = $this->getGainAndLosses($resTransaction, $resAmount, $resQuote);
 
         return new Stats(
-            $sumBuy / 100,
-            0.00,
-            0.00,
-            $sumFees / 100,
-            0.00,
-            - $sumFees / 100,
-             - $sumFees / 100
+            round($resTransaction[self::BUY] / self::HUNDRED_MILLION, 2),
+            0,
+            round($resTransaction[self::EARN] / self::HUNDRED_MILLION, 2),
+            round($resTransaction[self::FEES] / self::HUNDRED_MILLION, 2),
+            round($gain / 100000000, 2),
+            round(($losses + $resTransaction[self::FEES]) / 100000000, 2),
+            round($currentValue / 100000000, 2)
         );
+    }
+
+    private function getGainAndLosses(array $resTransaction, array $resAmount, array $resQuote): array
+    {
+        $currentValue = 0;
+        foreach ($resAmount as $symbol => $amount) {
+            $currentValue += $amount * $resQuote[$symbol] / self::HUNDRED_MILLION;
+        }
+
+        if ($currentValue > $resTransaction[self::BUY]) {
+            $gain = $currentValue - $resTransaction[self::BUY];
+            $losses = 0;
+        } else {
+            $gain = 0;
+            $losses = $resTransaction[self::BUY] - $currentValue;
+        }
+
+        return [$gain, $losses, $currentValue];
     }
 }

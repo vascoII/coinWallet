@@ -5,14 +5,21 @@ namespace App\Domain\Entities\Coinbase;
 
 class Transaction
 {
+    public const BUY = 'buy';
+    public const SELL = 'sell';
+    public const EARN = 'earn';
+    public const EXCHANGE = 'exchange';
+
+    public const CGLD = 'CGLD';
+
     public int $id;
     public string $symbol;
     public string $type;
     public string $referenceCode;
     public string $paymentMethod;
     public string $dateHour;
-    public float $amount;
-    public float $exchangeRate;
+    public int $amount;
+    public int $exchangeRate;
     public int $subTotal;
     public int $fees;
     public int $total;
@@ -24,8 +31,8 @@ class Transaction
         string $referenceCode,
         string $paymentMethod,
         string $dateHour,
-        float $amount,
-        float $exchangeRate,
+        int $amount,
+        int $exchangeRate,
         int $subTotal,
         int $fees,
         int $total
@@ -92,17 +99,17 @@ class Transaction
     }
 
     /**
-     * @return float
+     * @return int
      */
-    public function getAmount(): float
+    public function getAmount(): int
     {
         return $this->amount;
     }
 
     /**
-     * @return float
+     * @return int
      */
-    public function getExchangeRate(): float
+    public function getExchangeRate(): int
     {
         return $this->exchangeRate;
     }

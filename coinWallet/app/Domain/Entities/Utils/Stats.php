@@ -12,7 +12,7 @@ class Stats
     public float $fee;
     public float $gain;
     public float $losses;
-    public float $balance;
+    public float $currentValue;
 
     /**
      * Stats constructor.
@@ -22,7 +22,7 @@ class Stats
      * @param float $fee
      * @param float $gain
      * @param float $losses
-     * @param float $balance
+     * @param float $currentValue
      */
     public function __construct(
         float $buy,
@@ -31,7 +31,7 @@ class Stats
         float $fee,
         float $gain,
         float $losses,
-        float $balance
+        float $currentValue
     ) {
         $this->buy = $buy;
         $this->sell = $sell;
@@ -39,7 +39,7 @@ class Stats
         $this->fee = $fee;
         $this->gain = $gain;
         $this->losses = $losses;
-        $this->balance = $balance;
+        $this->currentValue = $currentValue;
     }
 
 
@@ -94,9 +94,9 @@ class Stats
     /**
      * @return float
      */
-    public function getBalance(): float
+    public function getCurrentValue(): float
     {
-        return $this->balance;
+        return $this->currentValue;
     }
 
 

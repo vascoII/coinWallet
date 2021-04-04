@@ -8,5 +8,5 @@ use App\Domain\Collections\CoinMarketCap\QuoteCollection;
 
 interface QuoteLatestService
 {
-    public function __invoke(array $symbols): QuoteCollection;
+    public function __invoke(array $symbols, int $latestId): QuoteCollection;
 }

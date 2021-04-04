@@ -46,7 +46,9 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png" />
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png" />
     <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    @stack('head')
+    </head>
 
     <!--[if lt IE 7 ]> <body class="ie ie6"> <![endif]-->
     <!--[if IE 7 ]> <body class="ie ie7 "> <![endif]-->
@@ -77,7 +79,7 @@
                     </li>
 
                 </ul>
-                <a class="brand" href="{{ url('/dashboard') }}"><span class="first">Your</span> <span class="second">Company</span></a>
+                <a class="brand" href="{{ url('/dashboard') }}"><span class="first">coin</span> <span class="second">Wallet</span></a>
             </div>
         </div>
 
@@ -100,16 +102,16 @@
                 <i class="icon-briefcase"></i>Coinbase<i class="icon-chevron-up"></i>
             </a>
             <ul id="accounts-menu" class="nav nav-list collapse">
-                <li><a href="{{ url('/login') }}">Sign In</a></li>
-                <li><a href="sign-up.html">Sign Up</a></li>
-                <li><a href="reset-password.html">Reset Password</a></li>
+                <li><a href="{{ url('/goals') }}">Goals</a></li>
+                <li><a href="{{ url('/currentvalue') }}">Current Value</a></li>
+                <li><a href="{{ url('/charts') }}">Charts</a></li>
             </ul>
 
             <a href="#error-menu" class="nav-header collapsed" data-toggle="collapse">
                 <i class="icon-exclamation-sign"></i>CoinMarketCap<i class="icon-chevron-up"></i>
             </a>
             <ul id="error-menu" class="nav nav-list collapse">
-                <li><a href="{{ url('/quotes') }}">Latest Quotes</a></li>
+                <li><a href="{{ url('/quotes') }}">Cryptocurrency</a></li>
                 <li><a href="404.html">404 page</a></li>
                 <li><a href="500.html">500 page</a></li>
                 <li><a href="503.html">503 page</a></li>

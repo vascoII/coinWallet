@@ -80,4 +80,10 @@ class CoinRepository implements CoinRepositoryInterface
         $collection = $this->model::where('id', $id)->get();
         return $this->hydrator->hydrate($collection->first());
     }
+
+    public function findOneBySymbol(string $symbol): Coin
+    {
+        $collection = $this->model::where('symbol', $symbol)->get();
+        return $this->hydrator->hydrate($collection->first());
+    }
 }

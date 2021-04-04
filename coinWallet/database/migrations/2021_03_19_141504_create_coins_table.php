@@ -13,13 +13,13 @@ class CreateCoinsTable extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('quotes');
+
         if (!Schema::hasTable('quotes')) {
             Schema::create('quotes', function (Blueprint $table) {
-                $table->integer('id')->autoIncrement();
+                $table->bigInteger('id');
                 $table->string('symbol');
                 $table->string('currency');
-                $table->float('price');
+                $table->bigInteger('price');
                 $table->string('volume_24h');
                 $table->string('percent_change_1h');
                 $table->string('percent_change_24h');
