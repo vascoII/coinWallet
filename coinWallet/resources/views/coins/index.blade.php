@@ -19,7 +19,7 @@
                     <tr><th>Slug</th><td>{{ $coin->getSlug() }}</td></tr>
                     <tr><th>Category</th><td>{{ $coin->getCategory() }}</td></tr>
                     <tr><th>Description</th><td>{{ $coin->getDescription() }}</td></tr>
-                    <tr><th>Logo</th><td>{{ $coin->getLogo() }}</td></tr>
+                    <tr><th>Logo</th><td><img src="{{ $coin->getLogo() }}" alt="{{ $coin->getSlug() }}"/></td></tr>
                     <tr><th>Subreddit</th><td>{{ $coin->getSubreddit() }}</td></tr>
                     <tr><th>Notice</th><td>{{ $coin->getNotice() }}</td></tr>
                     <tr><th>Tags</th><td>@foreach($coin->getTags() as $tag) {{ $tag }} <br> @endforeach</td></tr>

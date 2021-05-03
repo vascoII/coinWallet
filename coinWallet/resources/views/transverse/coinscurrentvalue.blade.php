@@ -2,6 +2,11 @@
 
 @section('content')
     <div class="header">
+        <div class="stats">
+            <p class="stat"><span class="number">€</span><a href="{{ url( $platform . '/coinscurrentvalue?fiat=EUR') }}">EUR</a></p>
+            <p class="stat"><span class="number">$</span><a href="{{ url( $platform . '/coinscurrentvalue?fiat=USD') }}">USD</a></p>
+        </div>
+
         <h1 class="page-title">List Coins</h1>
     </div>
 
@@ -18,7 +23,6 @@
                     <tr>
                         <th>Symbol</th>
                         <th>Amount</th>
-                        <th>Buy At</th>
                         <th>Current Value</th>
                         <th>Gain</th>
                         <th>Percent Gain</th>
@@ -31,15 +35,18 @@
                         <tr>
                             <td>{{ $key }}</td>
                             <td>{{ $coin['amount'] }}</td>
-                            <td>{{ $coin['buy_rate'] . ' €'}}</td>
-                            <td>{{ $coin['current_rate'] . ' €' }}</td>
-                            <td>@if($coin['current_rate'] > $coin['buy_rate'] ){{ ($coin['current_rate'] - $coin['buy_rate']) * $coin['amount']  . ' €' }} @endif</td>
-                            <td>@if($coin['current_rate'] > $coin['buy_rate'] )
-                                    {{ round( $coin['current_rate'] * 100 / $coin['buy_rate'] - 100, 2) . ' %'  }}
+                            <td>{{ $coin['current_rate'] . $fiat }}</td>
+                            <td>@if($coin['value'] > ($coin['spend'] + $coin['transfer'] - $coin['marge']))
+                                    {{ round($coin['value'] - $coin['spend'] - $coin['transfer'] + $coin['marge'], 2) . $fiat }}
                                 @endif</td>
-                            <td>@if($coin['current_rate'] < $coin['buy_rate'] ){{ ($coin['buy_rate'] - $coin['current_rate']) * $coin['amount']  . ' €' }} @endif</td>
-                            <td>@if($coin['current_rate'] < $coin['buy_rate'] )
-                                    {{ round($coin['current_rate'] * 100 / $coin['buy_rate'] - 100, 2) . ' %' }}
+                            <td>@if($coin['value'] > ($coin['spend'] + $coin['transfer'] - $coin['marge']))
+                                    {{ round( $coin['value'] * 100 / ($coin['spend'] + $coin['transfer'] - $coin['marge']) - 100, 2) . ' %'  }}
+                                @endif</td>
+                            <td>@if($coin['value'] < ($coin['spend'] + $coin['transfer'] - $coin['marge']))
+                                    {{ round(($coin['spend'] + $coin['transfer'] - $coin['marge']) - $coin['value'], 2) . $fiat}}
+                                @endif</td>
+                            <td>@if($coin['value'] < ($coin['spend'] + $coin['transfer'] - $coin['marge']))
+                                    {{ round( 100 - $coin['value'] * 100 / ($coin['spend'] + $coin['transfer'] - $coin['marge']), 2) . ' %'  }}
                                 @endif</td>
                         </tr>
                     @endforeach

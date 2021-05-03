@@ -17,19 +17,28 @@
 
     <div class="container-fluid">
         <div class="row-fluid">
-
-            <div class="row-fluid">
-                <div class="block">
-                    <a href="#page-stats" class="block-heading" data-toggle="collapse">Charts</a>
-                    <div id="page-stats" class="block-body collapse in">
-                        <div class="stat-widget-container">
+            @for($i = 0; $i < $countCoins; $i++)
+                <div class="row-fluid">
+                    <div id="coins_{{ $chartsData[$i * 2]['coins'] }}" class="block span6">
+                        <a href="#widget{{ $i * 2 }}container" class="block-heading" data-toggle="collapse">Coins {{ $chartsData[$i * 2]['coins'] }}</a>
+                        <div id="widget{{ $i * 2 }}container" class="block-body collapse">
                             <figure class="highcharts-figure">
-                                <div id="container"></div>
+                                <div id="container_coins_{{ $chartsData[$i * 2]['coins'] }}"></div>
                             </figure>
                         </div>
                     </div>
+                    @if(isset($chartsData[$i * 2 + 1]['coins']))
+                    <div id="coins_{{ $chartsData[$i * 2 + 1]['coins'] }}" class="block span6">
+                        <a href="#widget{{ $i * 2 + 1 }}container" class="block-heading" data-toggle="collapse">Coins {{ $chartsData[$i * 2 + 1]['coins'] }}</a>
+                        <div id="widget{{ $i * 2 + 1 }}container" class="block-body collapse">
+                            <figure class="highcharts-figure">
+                                <div id="container_coins_{{ $chartsData[$i * 2 + 1]['coins'] }}"></div>
+                            </figure>
+                        </div>
+                    </div>
+                    @endif
                 </div>
-            </div>
+            @endfor
 
             <footer>
                 <hr />
@@ -40,44 +49,46 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const chart = Highcharts.chart('container', {
+        @for($i = 0; $i < $countCoins; $i++)
+            document.addEventListener('DOMContentLoaded', function () {
+            const chart = Highcharts.chart('container_coins_{{ $chartsData[$i * 2]['coins'] }}', {
                 chart: {
                     zoomType: 'xy'
                 },
                 title: {
-                    text: 'Average Monthly Temperature and Rainfall in Tokyo'
+                    text: 'Wallet values over time'
                 },
                 subtitle: {
-                    text: 'Source: WorldClimate.com'
+                    text: ''
                 },
                 xAxis: [{
-                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    categories: [@foreach($chartsData[$i * 2]['date'] as $date)
+                        '{{ $date }}',
+                        @endforeach],
                     crosshair: true
                 }],
                 yAxis: [{ // Primary yAxis
                     labels: {
-                        format: '{value}°C',
+                        format: '{value} €',
                         style: {
                             color: Highcharts.getOptions().colors[1]
                         }
                     },
                     title: {
-                        text: 'Temperature',
+                        text: 'Wallet EUR',
                         style: {
                             color: Highcharts.getOptions().colors[1]
                         }
                     }
                 }, { // Secondary yAxis
                     title: {
-                        text: 'Rainfall',
+                        text: 'Spend EUR',
                         style: {
                             color: Highcharts.getOptions().colors[0]
                         }
                     },
                     labels: {
-                        format: '{value} mm',
+                        format: '{value} €',
                         style: {
                             color: Highcharts.getOptions().colors[0]
                         }
@@ -99,24 +110,113 @@
                         'rgba(255,255,255,0.25)'
                 },
                 series: [{
-                    name: 'Rainfall',
+                    name: 'Spend',
                     type: 'column',
                     yAxis: 1,
-                    data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
+                    data: [@foreach($chartsData[$i * 2]['spend'] as $spend)
+                        {{ $spend }},
+                        @endforeach],
                     tooltip: {
-                        valueSuffix: ' mm'
+                        valueSuffix: ' €'
                     }
 
                 }, {
-                    name: 'Temperature',
+                    name: 'Wallet',
                     type: 'spline',
-                    data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6],
+                    data: [@foreach($chartsData[$i * 2]['value'] as $value)
+                        {{ $value }},
+                        @endforeach],
                     tooltip: {
-                        valueSuffix: '°C'
+                        valueSuffix: ' €'
                     }
                 }]
             });
         });
+        @if(isset($chartsData[$i * 2 + 1]['coins']))
+            document.addEventListener('DOMContentLoaded', function () {
+            const chart = Highcharts.chart('container_coins_{{ $chartsData[$i * 2 + 1]['coins'] }}', {
+                chart: {
+                    zoomType: 'xy'
+                },
+                title: {
+                    text: 'Wallet values over time'
+                },
+                subtitle: {
+                    text: ''
+                },
+                xAxis: [{
+                    categories: [@foreach($chartsData[$i * 2 + 1]['date'] as $date)
+                        '{{ $date }}',
+                        @endforeach],
+                    crosshair: true
+                }],
+                yAxis: [{ // Primary yAxis
+                    labels: {
+                        format: '{value} €',
+                        style: {
+                            color: Highcharts.getOptions().colors[1]
+                        }
+                    },
+                    title: {
+                        text: 'Wallet EUR',
+                        style: {
+                            color: Highcharts.getOptions().colors[1]
+                        }
+                    }
+                }, { // Secondary yAxis
+                    title: {
+                        text: 'Spend EUR',
+                        style: {
+                            color: Highcharts.getOptions().colors[0]
+                        }
+                    },
+                    labels: {
+                        format: '{value} €',
+                        style: {
+                            color: Highcharts.getOptions().colors[0]
+                        }
+                    },
+                    opposite: true
+                }],
+                tooltip: {
+                    shared: true
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'left',
+                    x: 120,
+                    verticalAlign: 'top',
+                    y: 100,
+                    floating: true,
+                    backgroundColor:
+                        Highcharts.defaultOptions.legend.backgroundColor || // theme
+                        'rgba(255,255,255,0.25)'
+                },
+                series: [{
+                    name: 'Spend',
+                    type: 'column',
+                    yAxis: 1,
+                    data: [@foreach($chartsData[$i * 2 + 1]['spend'] as $spend)
+                        {{ $spend }},
+                        @endforeach],
+                    tooltip: {
+                        valueSuffix: ' €'
+                    }
+
+                }, {
+                    name: 'Wallet',
+                    type: 'spline',
+                    data: [@foreach($chartsData[$i * 2 + 1]['value'] as $value)
+                        {{ $value }},
+                        @endforeach],
+                    tooltip: {
+                        valueSuffix: ' €'
+                    }
+                }]
+            });
+        });
+        @endif
+        @endfor
     </script>
 
 @endsection

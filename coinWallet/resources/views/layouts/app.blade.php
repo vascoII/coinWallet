@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
     <meta charset="utf-8" />
-    <title>Coin Wallet</title>
+    <title>Coin Wallet Manager</title>
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="" />
@@ -79,7 +79,7 @@
                     </li>
 
                 </ul>
-                <a class="brand" href="{{ url('/dashboard') }}"><span class="first">coin</span> <span class="second">Wallet</span></a>
+                <a class="brand" href="{{ url('/dashboard') }}"><span class="first">coin wallet</span> <span class="second">Manager</span></a>
             </div>
         </div>
 
@@ -91,36 +91,59 @@
             <a href="#dashboard-menu" class="nav-header collapsed" data-toggle="collapse">
                 <i class="icon-dashboard"></i>Dashboard<i class="icon-chevron-up"></i>
             </a>
-            <ul id="dashboard-menu" class="nav nav-list collapse in">
+            <ul id="dashboard-menu" class="nav nav-list collapse { @if(isset($in_dashboard)) {{ 'in' }} @endif }">
                 <li><a href="{{ url('/dashboard') }}">Home</a></li>
                 <li><a href="{{ url('/coins') }}">Coins</a></li>
-                <li><a href="{{ url('/transactions') }}">Transactions</a></li>
                 <li><a href="calendar.html">Calendar</a></li>
             </ul>
 
-            <a href="#accounts-menu" class="nav-header collapsed" data-toggle="collapse">
+            <a href="#coinbase-menu" class="nav-header collapsed" data-toggle="collapse">
                 <i class="icon-briefcase"></i>Coinbase<i class="icon-chevron-up"></i>
             </a>
-            <ul id="accounts-menu" class="nav nav-list collapse">
-                <li><a href="{{ url('/goals') }}">Goals</a></li>
-                <li><a href="{{ url('/currentvalue') }}">Current Value</a></li>
-                <li><a href="{{ url('/charts') }}">Charts</a></li>
+            <ul id="coinbase-menu" class="nav nav-list collapse { @if(isset($in_coinbase)) {{ 'in' }} @endif }">
+                <li><a href="{{ url('/coinbase/transactions') }}">Transactions</a></li>
+                <li><a href="{{ url('/coinbase/coinscurrentvalue') }}">Coins Current Value</a></li>
+                <li><a href="{{ url('/coinbase/walletcurrentvalue') }}">Wallet Current Value</a></li>
+                <li><a href="{{ url('/coinbase/sells') }}">Sells</a></li>
+                <li><a href="{{ url('/coinbase/charts') }}">Charts</a></li>
             </ul>
 
-            <a href="#error-menu" class="nav-header collapsed" data-toggle="collapse">
+            <a href="#binance-menu" class="nav-header collapsed"  data-toggle="collapse">
+                <i class="icon-briefcase"></i>Binance<i class="icon-chevron-up"></i>
+            </a>
+            <ul id="binance-menu" class="nav nav-list collapse { @if(isset($in_binance)) {{ 'in' }} @endif }">
+                <li><a href="{{ url('/binance/transactions') }}">Transactions</a></li>
+                <li><a href="{{ url('/binance/coinscurrentvalue') }}">Coins Current Value</a></li>
+                <li><a href="{{ url('/binance/walletcurrentvalue') }}">Wallet Current Value</a></li>
+                <li><a href="{{ url('/binance/sells') }}">Sells</a></li>
+                <li><a href="{{ url('/binance/charts') }}">Charts</a></li>
+            </ul>
+
+            <a href="#coinlist-menu" class="nav-header collapsed"  data-toggle="collapse">
+                <i class="icon-briefcase"></i>CoinList<i class="icon-chevron-up"></i>
+            </a>
+            <ul id="coinlist-menu" class="nav nav-list collapse { @if(isset($in_coinlist)) {{ 'in' }} @endif }">
+                <li><a href="{{ url('/coinlist/transactions') }}">Transactions</a></li>
+                <li><a href="{{ url('/coinlist/coinscurrentvalue') }}">Coins Current Value</a></li>
+                <li><a href="{{ url('/coinlist/walletcurrentvalue') }}">Wallet Current Value</a></li>
+                <li><a href="{{ url('/coinlist/sells') }}">Sells</a></li>
+                <li><a href="{{ url('/coinlist/charts') }}">Charts</a></li>
+            </ul>
+
+            <a href="#coinMarketCap-menu" class="nav-header collapsed" data-toggle="collapse">
                 <i class="icon-exclamation-sign"></i>CoinMarketCap<i class="icon-chevron-up"></i>
             </a>
-            <ul id="error-menu" class="nav nav-list collapse">
+            <ul id="coinMarketCap-menu" class="nav nav-list collapse { @if(isset($in_coinMarketCap)) {{ 'in' }} @endif }">
                 <li><a href="{{ url('/quotes') }}">Cryptocurrency</a></li>
                 <li><a href="404.html">404 page</a></li>
                 <li><a href="500.html">500 page</a></li>
                 <li><a href="503.html">503 page</a></li>
             </ul>
 
-            <a href="#legal-menu" class="nav-header collapsed"  data-toggle="collapse">
+            <a href="#coinGecko-menu" class="nav-header collapsed"  data-toggle="collapse">
                 <i class="icon-legal"></i>CoinGecko<i class="icon-chevron-up"></i>
             </a>
-            <ul id="legal-menu" class="nav nav-list collapse">
+            <ul id="coinGecko-menu" class="nav nav-list collapse { @if(isset($in_coinGecko)) {{ 'in' }} @endif }">
                 <li><a href="privacy-policy.html">Privacy Policy</a></li>
                 <li><a href="terms-and-conditions.html">Terms and Conditions</a></li>
             </ul>

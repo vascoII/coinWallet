@@ -64,6 +64,18 @@
                                 <td>{{ $transaction->getFees() / 100000000  . ' €' }}</td>
                                 <td>{{ $transaction->getTotal() / 100000000 . ' €'  }}</td>
                                 <td>{{ $transaction->getExchangeRate() / 100000000 }}</td>
+                            @else
+                                <td>{{ $transaction->getId() }}</td>
+                                <td>{{ $transaction->getSymbol() }}</td>
+                                <td>{{ $transaction->getType() }}</td>
+                                <td>{{ $transaction->getReferenceCode() }}</td>
+                                <td>{{ $transaction->getType() }}</td>
+                                <td>{{ $transaction->getDateHour() }}</td>
+                                <td>{{ $transaction->getAmount() / 100000000 }} </td>
+                                <td>{{ $transaction->getSubTotal() / 100000000  . ' €' }}</td>
+                                <td>{{ $transaction->getFees() / 100000000  . ' €' }}</td>
+                                <td>{{ $transaction->getTotal() / 100000000 . ' €'  }}</td>
+                                <td></td>
                             @endif
                         </tr>
                         @endforeach
