@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Infrastructure\Model\Coinbase;
+namespace App\Infrastructure\Model\Transverse;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

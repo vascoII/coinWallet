@@ -70,7 +70,11 @@ class QuoteRepository implements QuoteRepositoryInterface
     public function findLast(int $countCoins): ?QuoteCollection
     {
         $quoteCollection = new QuoteCollection();
-        $collection = $this->model::where(['currency' => 'EUR'])->orderBy('last_updated', 'DESC')->limit($countCoins)->get();
+        $collection = $this->model::where(['currency' => 'EUR'])
+            ->orderBy('last_updated', 'DESC')
+            ->orderBy('symbol')
+            ->limit($countCoins)
+            ->get();
 
         if ($collection->isEmpty()) {
             return null;
@@ -115,6 +119,58 @@ class QuoteRepository implements QuoteRepositoryInterface
         return $result;
     }
 
+    public function findLastBySymbols(array $symbol): ?QuoteCollection
+    {
+        if (in_array('CGLD', $symbol)) {
+            array_push($symbol, 'CELO');
+        }
+        $quoteCollection = new QuoteCollection();
+        $collection = $this->model::select('id', 'symbol', 'currency', 'price', 'volume_24h', 'percent_change_1h',
+            'percent_change_24h', 'percent_change_7d', 'percent_change_30d', 'percent_change_60d', 'percent_change_90d',
+            'market_cap', 'last_updated', 'max_supply', 'circulating_supply', 'total_supply')
+            ->where(['currency' => 'EUR'])
+            ->whereIn('symbol', $symbol)
+            ->groupBy('symbol')
+            ->orderBy('last_updated', 'DESC')
+            ->limit(count($symbol))
+            ->get();
+
+        if ($collection->isEmpty()) {
+            return null;
+        }
+
+        foreach ($collection as $item) {
+            $quoteCollection->add($this->hydrator->hydrate($item));
+        }
+        return $quoteCollection;
+    }
+
+    public function findFirstBySymbols(array $symbol): ?QuoteCollection
+    {
+        if (in_array('CGLD', $symbol)) {
+            array_push($symbol, 'CELO');
+        }
+        $quoteCollection = new QuoteCollection();
+        $collection = $this->model::select('id', 'symbol', 'currency', 'price', 'volume_24h', 'percent_change_1h',
+            'percent_change_24h', 'percent_change_7d', 'percent_change_30d', 'percent_change_60d', 'percent_change_90d',
+            'market_cap', 'last_updated', 'max_supply', 'circulating_supply', 'total_supply')
+            ->where(['currency' => 'EUR'])
+            ->whereIn('symbol', $symbol)
+            ->groupBy('symbol')
+            ->orderBy('last_updated', 'ASC')
+            ->limit(count($symbol))
+            ->get();
+
+        if ($collection->isEmpty()) {
+            return null;
+        }
+
+        foreach ($collection as $item) {
+            $quoteCollection->add($this->hydrator->hydrate($item));
+        }
+        return $quoteCollection;
+    }
+
     public function findFirstValues(string $symbol): Quote
     {
         $quoteModel = $this->model::where(['currency' => 'EUR'])
@@ -136,7 +192,23 @@ class QuoteRepository implements QuoteRepositoryInterface
             ->groupBy('date')
             ->get();
         foreach ($collection as $item) {
-                $res[] = ['date' => strtotime($item->date), 'data' => $item->data];
+                $res[] = ['date' => $item->date, 'data' => $item->data];
+        }
+        return $res;
+    }
+
+    public function findValueByCoinOverTime(): array
+    {
+        $res = [];
+        $collection = $this->model::selectRaw('last_updated as date')
+            ->selectRaw('price as price')
+            ->selectRaw('symbol as symbol')
+            ->where('currency', '=', 'EUR')
+            ->orderBy('symbol')
+            ->orderBy('date')
+            ->get();
+        foreach ($collection as $item) {
+            $res[$item->symbol][] = ['date' => $item->date, 'price' => $item->price];
         }
         return $res;
     }
@@ -175,4 +247,17 @@ class QuoteRepository implements QuoteRepositoryInterface
 
         return $res;
     }
+
+    public function findLastPriceBySymbol(string $symbol, string $fiat = 'EUR'): float
+    {
+        $model = $this->model::select('price')
+            ->where(['currency' => $fiat])
+            ->where('symbol', '=', $symbol === 'CGLD' ? 'CELO' : $symbol)
+            ->orderBy('last_updated', 'DESC')
+            ->get()
+            ->first();
+
+        return $model->price / self::HUNDRED_MILLION;
+    }
+
 }

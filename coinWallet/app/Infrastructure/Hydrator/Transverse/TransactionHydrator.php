@@ -1,11 +1,11 @@
 <?php
 
 
-namespace App\Infrastructure\Hydrator\Coinbase;
+namespace App\Infrastructure\Hydrator\Transverse;
 
-use App\Domain\Collections\Coinbase\TransactionCollection;
-use App\Domain\Entities\Coinbase\Transaction;
-use App\Infrastructure\Model\Coinbase\TransactionModel;
+use App\Domain\Collections\Transverse\TransactionCollection;
+use App\Domain\Entities\Transverse\Transaction;
+use App\Infrastructure\Model\Transverse\TransactionModel;
 
 class TransactionHydrator
 {
@@ -35,7 +35,8 @@ class TransactionHydrator
             $transactionModel->platform,
             $transactionModel->sub_total,
             $transactionModel->fees,
-            $transactionModel->total
+            $transactionModel->total,
+            $transactionModel->marge
         );
     }
 
@@ -56,7 +57,8 @@ class TransactionHydrator
             $transactionModel->platform,
             $transactionModel->sub_total ?? rand(),
             $transactionModel->fees ?? rand(),
-            $transactionModel->total
+            $transactionModel->total,
+            $transactionModel->marge
         );
     }
 
@@ -79,6 +81,9 @@ class TransactionHydrator
             case Transaction::EXCHANGE:
                 return $this->exchangeCase($requestData);
                 break;
+            case Transaction::TRANSFER:
+                return $this->transferCase($requestData);
+                break;
             default:
                 return null;
                 break;
@@ -99,7 +104,8 @@ class TransactionHydrator
             $requestData['platform'],
             $requestData['sub_total'] * self::HUNDRED_MILLION,
             $requestData['fees'] * self::HUNDRED_MILLION,
-            $requestData['sub_total'] * self::HUNDRED_MILLION + $requestData['fees'] * self::HUNDRED_MILLION
+            $requestData['sub_total'] * self::HUNDRED_MILLION + $requestData['fees'] * self::HUNDRED_MILLION,
+            0
         );
         $this->transactioncollection->add($transaction);
         return $this->transactioncollection;
@@ -119,7 +125,8 @@ class TransactionHydrator
             $requestData['platform'],
             $requestData['sub_total'] * self::HUNDRED_MILLION,
             $requestData['fees'] * self::HUNDRED_MILLION,
-            $requestData['total'] * self::HUNDRED_MILLION
+            $requestData['total'] * self::HUNDRED_MILLION,
+            $requestData['marge'] * self::HUNDRED_MILLION
         );
         $this->transactioncollection->add($transaction);
         return $this->transactioncollection;
@@ -139,7 +146,8 @@ class TransactionHydrator
             $requestData['platform'],
             $requestData['total'] * self::HUNDRED_MILLION,
             0,
-            $requestData['total'] * self::HUNDRED_MILLION
+            $requestData['total'] * self::HUNDRED_MILLION,
+            0
         );
         $this->transactioncollection->add($transaction);
         return $this->transactioncollection;
@@ -159,6 +167,7 @@ class TransactionHydrator
             $requestData['platform'],
             0,
             0,
+            0,
             0
         );
         $transactionLess = new Transaction(
@@ -173,11 +182,50 @@ class TransactionHydrator
             $requestData['platform'],
             0,
             0,
+            0,
             0
         );
 
         $this->transactioncollection->add($transactionPlus);
         $this->transactioncollection->add($transactionLess);
+        return $this->transactioncollection;
+    }
+
+    private function transferCase(array $requestData): TransactionCollection
+    {
+        $transactionTo = new Transaction(
+            $requestData['id'],
+            $requestData['symbol'],
+            Transaction::TRANSFER,
+            $requestData['reference_code'],
+            'none',
+            $requestData['date_hour'],
+            $requestData['amountReceived'] * self::HUNDRED_MILLION,
+            0,
+            $requestData['platformTo'],
+            $requestData['total'] * self::HUNDRED_MILLION,
+            0,
+            $requestData['total'] * self::HUNDRED_MILLION,
+            $requestData['marge'] * self::HUNDRED_MILLION
+        );
+        $transactionFrom = new Transaction(
+            $requestData['id'] + 1,
+            $requestData['symbol'],
+            Transaction::TRANSFER,
+            $requestData['reference_code'] . ' + ',
+            'none',
+            $requestData['date_hour'],
+            - $requestData['amountSend'] * self::HUNDRED_MILLION,
+            0,
+            $requestData['platformFrom'],
+            $requestData['total'] * self::HUNDRED_MILLION - $requestData['fees'] * self::HUNDRED_MILLION,
+            $requestData['fees'] * self::HUNDRED_MILLION,
+            - $requestData['total'] * self::HUNDRED_MILLION,
+            $requestData['marge'] * self::HUNDRED_MILLION
+        );
+
+        $this->transactioncollection->add($transactionTo);
+        $this->transactioncollection->add($transactionFrom);
         return $this->transactioncollection;
     }
 }

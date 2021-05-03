@@ -3,7 +3,7 @@
 
 namespace App\Infrastructure\Service\CoinMarketCap;
 
-use App\Infrastructure\Hydrator\Coinbase\CoinHydrator;
+use App\Infrastructure\Hydrator\Transverse\CoinHydrator;
 use App\Infrastructure\Hydrator\CoinMarketCap\QuoteHydrator;
 use GuzzleHttp\Client as RestClient;
 

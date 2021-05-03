@@ -1,13 +1,13 @@
 <?php
 
 
-namespace App\Infrastructure\Repositories\Coinbase;
+namespace App\Infrastructure\Repositories\Transverse;
 
-use App\Domain\Collections\Coinbase\TransactionCollection;
-use App\Domain\Entities\Coinbase\Transaction;
-use App\Domain\Repositories\Coinbase\TransactionRepository as TransactionRepositoryInterface;
-use App\Infrastructure\Hydrator\Coinbase\TransactionHydrator;
-use App\Infrastructure\Model\Coinbase\TransactionModel;
+use App\Domain\Collections\Transverse\TransactionCollection;
+use App\Domain\Entities\Transverse\Transaction;
+use App\Domain\Repositories\Transverse\TransactionRepository as TransactionRepositoryInterface;
+use App\Infrastructure\Hydrator\Transverse\TransactionHydrator;
+use App\Infrastructure\Model\Transverse\TransactionModel;
 
 
 class TransactionRepository implements TransactionRepositoryinterface
@@ -22,6 +22,8 @@ class TransactionRepository implements TransactionRepositoryinterface
     public const AMOUNT = 'amount';
     public const EXCHANGE = 'exchange';
     public const TOTAL = 'total';
+
+    const HUNDRED_MILLION = 100000000;
 
     public array $type = ['buy', 'earn', 'exchange'];
 
@@ -84,6 +86,7 @@ class TransactionRepository implements TransactionRepositoryinterface
         $model->sub_total = $transaction->getSubTotal();
         $model->fees = $transaction->getFees();
         $model->total = $transaction->getTotal();
+        $model->marge = $transaction->getMarge();
 
         $model->save();
     }
@@ -248,6 +251,29 @@ class TransactionRepository implements TransactionRepositoryinterface
             $sum += $item->total;
         }
         return $sum;
+    }
+
+    public function findExchangeTotal(string $symbol, string $date): float
+    {
+        $model = $this->model::select('total')
+            ->where('symbol', '=', $symbol)
+            ->where('date_hour', 'like', $date . '%')
+            ->get()
+            ->first();
+
+        return abs($model->total) / self::HUNDRED_MILLION;
+    }
+
+    public function findAllSymbol(string $platform): array
+    {
+        $result = [];
+        $collection = $this->model::select('symbol')
+            ->where('platform', '=', $platform)
+            ->get();
+        foreach ($collection as $item) {
+            $result[] = $item->symbol;
+        }
+        return $result;
     }
 
 }

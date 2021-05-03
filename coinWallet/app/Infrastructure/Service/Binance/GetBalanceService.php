@@ -1,32 +1,29 @@
 <?php
 
-namespace App\Infrastructure\Service\Coinbase;
+namespace App\Infrastructure\Service\Binance;
 
-use App\Domain\Services\Coinbase\GetBalanceService as GetBalanceServiceInterface;
+use App\Domain\Services\Binance\GetBalanceService as GetBalanceServiceInterface;
 use GuzzleHttp\Exception\GuzzleException;
 
-class GetBalanceService extends CoinbaseService implements GetBalanceServiceInterface
+class GetBalanceService extends BinanceService implements GetBalanceServiceInterface
 {
-    const URI = '/accounts';
-
     public function __invoke()
     {
-        $date = new \DateTime();
+        $ClassServerTime = $this->restClient->request('GET', 'https://api.binance.com/api/v1/time');
+        $CallServerTime = json_decode((string)$ClassServerTime->getBody(), true);
+        $Time = $CallServerTime['serverTime'];
+        $Timestamp = 'timestamp='.$Time; // build timestamp type url get
+
+        $Signature = $this->signature($Timestamp);
+        $BalanceUrl='https://api.binance.com/api/v3/account?timestamp='.$Time.'&signature='.$Signature;
+
         try {
             $response = $this->restClient->request(
                 'GET',
-                $this->basePath . self::URI,
+                $BalanceUrl,
                 [
                     'headers' => [
-                        'CB-ACCESS-KEY' => $this->key,
-                        'CB-ACCESS-SIGN' => $this->signature(
-                            $request_path = $this->basePath . self::URI,
-                            $body = '',
-                            $timestamp = $date->getTimestamp(),
-                            $method='GET'
-                        ),
-                        'CB-ACCESS-TIMESTAMP' => $this->key,
-                        'CB-ACCESS-PASSPHRASE' => ''
+                        'X-MBX-APIKEY' => $this->key
                     ]
                 ]
             );

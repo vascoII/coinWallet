@@ -29,7 +29,7 @@ class QuoteLatestService extends CoinMarketCapService implements QuoteLatestServ
             );
 
             if ($responseRaw->getStatusCode() != 200) {
-
+                echo json_encode($responseRaw); die;
             }
             $resRaw = json_decode((string)$responseRaw->getBody(), true);
 
@@ -44,7 +44,7 @@ class QuoteLatestService extends CoinMarketCapService implements QuoteLatestServ
             );
 
             if ($responseConvert->getStatusCode() != 200) {
-
+                echo json_encode($responseConvert); die;
             }
             $resConvert = json_decode((string)$responseConvert->getBody(), true);
 

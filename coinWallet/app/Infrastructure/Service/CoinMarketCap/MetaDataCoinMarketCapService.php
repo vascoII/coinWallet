@@ -3,7 +3,7 @@
 
 namespace App\Infrastructure\Service\CoinMarketCap;
 
-use App\Domain\Entities\Coinbase\Coin;
+use App\Domain\Entities\Transverse\Coin;
 use App\Domain\Exceptions\CoinMarketCap\MetaDataCoinMarketCapNotFound;
 use App\Domain\Services\MetaDataService;
 use GuzzleHttp\Exception\GuzzleException;

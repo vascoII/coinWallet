@@ -6,7 +6,7 @@ namespace App\Infrastructure\Service\Coinbase;
 use App\Domain\Collections\CoinMarketCap\QuoteCollection;
 use App\Domain\Collections\Utils\AlertInfoCollection;
 use App\Domain\Entities\Utils\AlertInfo;
-use App\Domain\Repositories\Coinbase\TransactionRepository;
+use App\Domain\Repositories\Transverse\TransactionRepository;
 use App\Domain\Repositories\CoinMarketCap\QuoteRepository;
 use App\Domain\Services\Coinbase\GetAlertInfoService as GetAlertInfoServiceInterface;
 

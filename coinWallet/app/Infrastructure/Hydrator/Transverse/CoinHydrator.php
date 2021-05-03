@@ -1,10 +1,10 @@
 <?php
 
 
-namespace App\Infrastructure\Hydrator\Coinbase;
+namespace App\Infrastructure\Hydrator\Transverse;
 
-use App\Domain\Entities\Coinbase\Coin;
-use App\Infrastructure\Model\Coinbase\CoinModel;
+use App\Domain\Entities\Transverse\Coin;
+use App\Infrastructure\Model\Transverse\CoinModel;
 
 class CoinHydrator
 {
@@ -54,9 +54,9 @@ class CoinHydrator
             $data['logo'],
             $data['subreddit'],
             $data['notice'],
-            $data['tags'],
-            $data['tag-names'],
-            $data['tag-groups'],
+            is_null($data['tags']) ? [] : $data['tags'],
+            is_null($data['tag-names']) ? [] : $data['tag-names'],
+            is_null($data['tag-groups']) ? [] : $data['tag-groups'],
             $data['urls']['website'],
             $data['urls']['twitter'],
             $data['urls']['message_board'],

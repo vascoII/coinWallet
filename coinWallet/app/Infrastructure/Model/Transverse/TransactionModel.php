@@ -1,11 +1,10 @@
 <?php
 
 
-namespace App\Infrastructure\Model\Coinbase;
+namespace App\Infrastructure\Model\Transverse;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Builder;
 
 class TransactionModel extends Model
 {
@@ -26,7 +25,8 @@ class TransactionModel extends Model
         'exchangeRate',
         'subTotal',
         'fees',
-        'total'
+        'total',
+        'marge'
     ];
 
 }

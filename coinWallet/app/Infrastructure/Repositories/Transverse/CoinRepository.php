@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Infrastructure\Repositories\Coinbase;
+namespace App\Infrastructure\Repositories\Transverse;
 
-use App\Domain\Collections\Coinbase\CoinCollection;
-use App\Domain\Entities\Coinbase\Coin;
-use App\Domain\Repositories\Coinbase\CoinRepository as CoinRepositoryInterface;
-use App\Infrastructure\Hydrator\Coinbase\CoinHydrator;
-use App\Infrastructure\Model\Coinbase\CoinModel;
+use App\Domain\Collections\Transverse\CoinCollection;
+use App\Domain\Entities\Transverse\Coin;
+use App\Domain\Repositories\Transverse\CoinRepository as CoinRepositoryInterface;
+use App\Infrastructure\Hydrator\Transverse\CoinHydrator;
+use App\Infrastructure\Model\Transverse\CoinModel;
 
 class CoinRepository implements CoinRepositoryInterface
 {
@@ -55,7 +55,7 @@ class CoinRepository implements CoinRepositoryInterface
         $this->model->logo = $coin->getLogo();
         $this->model->subreddit = $coin->getSubreddit();
         $this->model->notice = $coin->getNotice();
-        $this->model->tags = json_encode($coin->getTags());
+        $this->model->tags = json_encode($coin->getTags() ?? []);
         $this->model->tag_names = json_encode($coin->getTags());
         $this->model->tag_groups = json_encode($coin->getTagGroups());
         $this->model->urls_website = json_encode($coin->getUrlsWebsite());
