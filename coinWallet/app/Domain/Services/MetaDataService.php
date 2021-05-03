@@ -4,7 +4,7 @@
 namespace App\Domain\Services;
 
 
-use App\Domain\Entities\Coinbase\Coin;
+use App\Domain\Entities\Transverse\Coin;
 
 interface MetaDataService
 {

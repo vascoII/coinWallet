@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Domain\Collections\Coinbase;
+namespace App\Domain\Collections\Transverse;
 
-use App\Domain\Entities\Coinbase\Coin;
+use App\Domain\Entities\Transverse\Coin;
 
 class CoinCollection
 {

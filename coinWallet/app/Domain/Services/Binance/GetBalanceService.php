@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Services\Coinbase;
+namespace App\Domain\Services\Binance;
 
 interface GetBalanceService
 {

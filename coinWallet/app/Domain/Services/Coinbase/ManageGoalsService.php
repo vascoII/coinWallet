@@ -4,7 +4,7 @@
 namespace App\Domain\Services\Coinbase;
 
 
-use App\Domain\Collections\Coinbase\TransactionCollection;
+use App\Domain\Collections\Transverse\TransactionCollection;
 use App\Domain\Collections\CoinMarketCap\QuoteCollection;
 use App\Domain\Collections\Utils\GoalCollection;
 use App\Domain\Entities\Utils\Goal;

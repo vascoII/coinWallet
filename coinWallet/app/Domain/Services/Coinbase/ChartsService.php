@@ -3,7 +3,7 @@
 
 namespace App\Domain\Services\Coinbase;
 
-use App\Domain\Repositories\Coinbase\CoinRepository;
+use App\Domain\Repositories\Transverse\CoinRepository;
 
 class ChartsService
 {

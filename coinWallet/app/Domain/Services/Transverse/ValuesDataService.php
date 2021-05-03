@@ -1,8 +1,6 @@
 <?php
 
-
-namespace App\Domain\Services\Coinbase;
-
+namespace App\Domain\Services\Transverse;
 
 use App\Domain\Collections\Transverse\TransactionCollection;
 use App\Domain\Collections\CoinMarketCap\QuoteCollection;

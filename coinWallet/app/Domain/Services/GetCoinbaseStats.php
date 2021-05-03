@@ -3,9 +3,9 @@
 
 namespace App\Domain\Services;
 
-use App\Domain\Entities\Coinbase\Transaction;
+use App\Domain\Entities\Transverse\Transaction;
 use App\Domain\Entities\Utils\Stats;
-use App\Domain\Repositories\Coinbase\TransactionRepository;
+use App\Domain\Repositories\Transverse\TransactionRepository;
 use App\Domain\Repositories\CoinMarketCap\QuoteRepository;
 
 class GetCoinbaseStats
@@ -42,7 +42,7 @@ class GetCoinbaseStats
             round($resTransaction[self::EARN] / self::HUNDRED_MILLION, 2),
             round($resTransaction[self::FEES] / self::HUNDRED_MILLION, 2),
             round($gain / 100000000, 2),
-            round(($losses + $resTransaction[self::FEES]) / 100000000, 2),
+            round($losses / 100000000, 2),
             round($currentValue / 100000000, 2)
         );
     }

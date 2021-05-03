@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Entities\Coinbase;
+namespace App\Domain\Entities\Transverse;
 
 
 class Coin

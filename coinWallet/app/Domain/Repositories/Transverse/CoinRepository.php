@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Domain\Repositories\Coinbase;
+namespace App\Domain\Repositories\Transverse;
 
-use App\Domain\Collections\Coinbase\CoinCollection;
-use App\Domain\Entities\Coinbase\Coin;
+use App\Domain\Collections\Transverse\CoinCollection;
+use App\Domain\Entities\Transverse\Coin;
 
 interface CoinRepository
 {

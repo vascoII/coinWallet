@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Domain\Entities\Coinbase;
+namespace App\Domain\Entities\Transverse;
 
 class Transaction
 {
@@ -9,6 +9,8 @@ class Transaction
     public const SELL = 'sell';
     public const EARN = 'earn';
     public const EXCHANGE = 'exchange';
+    public const TRANSFER = 'transfer';
+    public const TYPE = ['sell', 'exchange', 'earn', 'buy', 'transfer'];
 
     public const CGLD = 'CGLD';
 
@@ -24,6 +26,7 @@ class Transaction
     public int $subTotal;
     public int $fees;
     public int $total;
+    public int $marge;
 
     public function __construct(
         int $id,
@@ -37,7 +40,8 @@ class Transaction
         string $platform,
         int $subTotal,
         int $fees,
-        int $total
+        int $total,
+        int $marge
     ) {
         $this->id = $id;
         $this->symbol = $symbol;
@@ -51,6 +55,7 @@ class Transaction
         $this->subTotal = $subTotal;
         $this->fees = $fees;
         $this->total = $total;
+        $this->marge = $marge;
     }
 
     /**
@@ -147,6 +152,14 @@ class Transaction
     public function getTotal(): int
     {
         return $this->total;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMarge(): int
+    {
+        return $this->marge;
     }
 
 }

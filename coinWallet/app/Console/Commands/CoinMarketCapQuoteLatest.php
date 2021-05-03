@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Domain\Repositories\Coinbase\CoinRepository;
+use App\Domain\Repositories\Transverse\CoinRepository;
 use App\Domain\Repositories\CoinMarketCap\QuoteRepository;
 use App\Domain\Services\CoinMarketCap\QuoteLatestService;
 use Illuminate\Console\Command;

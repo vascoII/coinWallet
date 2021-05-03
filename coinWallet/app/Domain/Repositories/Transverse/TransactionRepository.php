@@ -1,10 +1,10 @@
 <?php
 
 
-namespace App\Domain\Repositories\Coinbase;
+namespace App\Domain\Repositories\Transverse;
 
-use App\Domain\Collections\Coinbase\TransactionCollection;
-use App\Domain\Entities\Coinbase\Transaction;
+use App\Domain\Collections\Transverse\TransactionCollection;
+use App\Domain\Entities\Transverse\Transaction;
 
 interface TransactionRepository
 {
@@ -22,4 +22,6 @@ interface TransactionRepository
     public function findCoinAmountAtTime(string $symbol, string $strtotime): int;
     public function findSpendAtTime(string $date): float;
     public function findSpendByCoinAtTime(string $symbol, string $date): float;
+    public function findExchangeTotal(string $symbol, string $date): float;
+    public function findAllSymbol(string $platform): array;
 }

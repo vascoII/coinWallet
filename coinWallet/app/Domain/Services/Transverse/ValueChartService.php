@@ -1,7 +1,6 @@
 <?php
 
-
-namespace App\Domain\Services\Coinbase;
+namespace App\Domain\Services\Transverse;
 
 use App\Domain\Repositories\Transverse\TransactionRepository;
 

@@ -5,7 +5,7 @@ namespace App\Domain\Services\CoinMarketCap;
 
 use App\Domain\Collections\Utils\ValueCoinCollection;
 use App\Domain\Entities\Utils\ValueCoin;
-use App\Domain\Repositories\Coinbase\TransactionRepository;
+use App\Domain\Repositories\Transverse\TransactionRepository;
 use App\Domain\Repositories\CoinMarketCap\QuoteRepository;
 
 class CoinsValueService
