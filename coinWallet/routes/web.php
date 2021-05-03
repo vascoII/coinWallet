@@ -1,15 +1,17 @@
 <?php
 
-use App\Http\Controllers\Actions\Coinbase\AddTransactionsAction;
-use App\Http\Controllers\Actions\Coinbase\ChartsAction;
-use App\Http\Controllers\Actions\Coinbase\CurrentValueAction;
-use App\Http\Controllers\Actions\Coinbase\GoalsAction;
+use App\Http\Controllers\Actions\Dashboard\DashboardAction;
+use App\Http\Controllers\Actions\Dashboard\ListCoinsAction;
+use App\Http\Controllers\Actions\Dashboard\GetCoinsByIdAction;
+use App\Http\Controllers\Actions\Transverse\ListTransactionsAction;
+use App\Http\Controllers\Actions\Transverse\AddTransactionsAction;
+use App\Http\Controllers\Actions\Transverse\CoinsCurrentValueAction;
+use App\Http\Controllers\Actions\Transverse\WalletCurrentValueAction;
+use App\Http\Controllers\Actions\Transverse\ChartsAction;
+use App\Http\Controllers\Actions\Transverse\SellsAction;
 use App\Http\Controllers\Actions\CoinMarketCap\Cryptocurrency\GetQuotesBySymbolAction;
 use App\Http\Controllers\Actions\CoinMarketCap\Cryptocurrency\ListQuotesAction;
-use App\Http\Controllers\Actions\GetCoinsByIdAction;
-use App\Http\Controllers\Actions\ListTransactionsAction;
-use App\Http\Controllers\Actions\ListCoinsAction;
-use App\Http\Controllers\Actions\DashboardAction;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,18 +30,41 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', DashboardAction::class);
-Route::get('/transactions', ListTransactionsAction::class);
-Route::get('/transactions/add', AddTransactionsAction::class);
-Route::post('/transactions/add', AddTransactionsAction::class);
 Route::get('/coins', ListCoinsAction::class);
 Route::get('/coin/{id}',GetCoinsByIdAction::class);
 
 /**
  * COINBASE
  */
-Route::get('/goals', GoalsAction::class);
-Route::get('/currentvalue', CurrentValueAction::class);
-Route::get('/charts', ChartsAction::class);
+Route::get('/coinbase/transactions', ListTransactionsAction::class);
+Route::get('/coinbase/transactions/add', AddTransactionsAction::class);
+Route::post('/coinbase/transactions/add', AddTransactionsAction::class);
+Route::get('/coinbase/coinscurrentvalue', CoinsCurrentValueAction::class);
+Route::get('/coinbase/walletcurrentvalue', WalletCurrentValueAction::class);
+Route::get('/coinbase/sells', SellsAction::class);
+Route::get('/coinbase/charts', ChartsAction::class);
+
+/**
+ * BINANCE
+ */
+Route::get('/binance/transactions', ListTransactionsAction::class);
+Route::get('/binance/transactions/add', AddTransactionsAction::class);
+Route::post('/binance/transactions/add', AddTransactionsAction::class);
+Route::get('/binance/coinscurrentvalue', CoinsCurrentValueAction::class);
+Route::get('/binance/walletcurrentvalue', WalletCurrentValueAction::class);
+Route::get('/binance/sells', SellsAction::class);
+Route::get('/binance/charts', ChartsAction::class);
+
+/**
+ * COINLIST
+ */
+Route::get('/coinlist/transactions', ListTransactionsAction::class);
+Route::get('/coinlist/transactions/add', AddTransactionsAction::class);
+Route::post('/coinlist/transactions/add', AddTransactionsAction::class);
+Route::get('/coinlist/coinscurrentvalue', CoinsCurrentValueAction::class);
+Route::get('/coinlist/walletcurrentvalue', WalletCurrentValueAction::class);
+Route::get('/coinlist/sells', SellsAction::class);
+Route::get('/coinlist/charts', ChartsAction::class);
 
 /**
  * COINMARKETCAP
