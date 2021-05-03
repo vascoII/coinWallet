@@ -13,10 +13,9 @@ class CreateFutureTransactionsTable extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('future_transactions');
         if (!Schema::hasTable('future_transactions')) {
             Schema::create('future_transactions', function (Blueprint $table) {
-                $table->id();
+                $table->id()->autoIncrement();
                 $table->string('symbol');
                 $table->string('reference_code')->unique();
                 $table->bigInteger('amount');
