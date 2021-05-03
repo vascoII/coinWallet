@@ -1,12 +1,10 @@
 <?php
 
-
 namespace App\Http\Responders\Transverse;
-
 
 use Illuminate\Http\Request;
 
-class CurrentValueResponder
+class CoinsCurrentValueResponder
 {
     protected Request $request;
 
@@ -15,8 +13,13 @@ class CurrentValueResponder
         $this->request = $request;
     }
 
-    public function send(array $valuesData, string $in)
+    public function send(array $valuesData, string $platform, string $in, string $fiat)
     {
-        return view('transverse.currentvalue', ['valuesData' => $valuesData, $in => true]);
+        return view('transverse.coinscurrentvalue', [
+            'valuesData' => $valuesData,
+            'platform' => $platform,
+            $in => true,
+            'fiat' => $fiat
+        ]);
     }
 }

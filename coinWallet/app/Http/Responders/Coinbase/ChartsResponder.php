@@ -14,8 +14,8 @@ class ChartsResponder
         $this->request = $request;
     }
 
-    public function send(array $chartsData, string $data)
+    public function send(array $chartsData, int $countCoins)
     {
-        return view('coinbase.charts', ['chartsData' => $chartsData, 'data' => $data]);
+        return view('coinbase.charts', ['chartsData' => $chartsData, 'countCoins' => $countCoins]);
     }
 }

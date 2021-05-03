@@ -1,19 +1,19 @@
 <?php
 
 
-namespace App\Http\Controllers\Actions;
+namespace App\Http\Controllers\Actions\Dashboard;
 
 
-use App\Domain\Entities\Coinbase\Transaction;
-use App\Domain\Repositories\Coinbase\CoinRepository;
-use App\Domain\Repositories\Coinbase\TransactionRepository;
+use App\Domain\Entities\Transverse\Transaction;
+use App\Domain\Repositories\Transverse\CoinRepository;
+use App\Domain\Repositories\Transverse\TransactionRepository;
 use App\Domain\Repositories\CoinMarketCap\QuoteRepository;
 use App\Domain\Services\Coinbase\GetAlertInfoService;
 use App\Domain\Services\CoinMarketCap\CoinsPercentService;
 use App\Domain\Services\CoinMarketCap\CoinsValueService;
 use App\Domain\Services\GetCoinbaseStats;
 use App\Domain\Services\MetaDataService;
-use App\Http\Responders\Coinbase\DashboardResponder;
+use App\Http\Responders\Dashboard\DashboardResponder;
 
 class DashboardAction
 {
@@ -57,8 +57,10 @@ class DashboardAction
         $quoteCollection = $this->quoteRepository->findLast(count($coinSymbolList));
 
         $coins = $this->coinRepository->findAll();
-        foreach($coins->all() as $coin) {
-            $coinsData[$coin->getSymbol()] = $coin->getName();
+        if (!is_null($coins)) {
+            foreach($coins->all() as $coin) {
+                $coinsData[$coin->getSymbol()] = $coin->getName();
+            }
         }
 
         $coinBaseStat = $this->transactions->findAllGroupBySymbol();

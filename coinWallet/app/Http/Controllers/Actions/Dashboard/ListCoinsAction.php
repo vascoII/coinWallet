@@ -1,10 +1,10 @@
 <?php
 
 
-namespace App\Http\Controllers\Actions;
+namespace App\Http\Controllers\Actions\Dashboard;
 
-use App\Domain\Repositories\Coinbase\CoinRepository;
-use App\Http\Responders\Coinbase\ListCoinsResponder;
+use App\Domain\Repositories\Transverse\CoinRepository;
+use App\Http\Responders\Dashboard\ListCoinsResponder;
 
 class ListCoinsAction
 {

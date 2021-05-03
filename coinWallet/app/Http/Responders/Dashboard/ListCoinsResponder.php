@@ -1,9 +1,9 @@
 <?php
 
 
-namespace App\Http\Responders\Coinbase;
+namespace App\Http\Responders\Dashboard;
 
-use App\Domain\Collections\Coinbase\CoinCollection;
+use App\Domain\Collections\Transverse\CoinCollection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -24,6 +24,6 @@ class ListCoinsResponder
             ]);
         }
 
-        return view('coins.list', ['coins' => $coins->all()]);
+        return view('dashboard.coinslist', ['coins' => $coins->all(), 'in_dashboard' => true]);
     }
 }

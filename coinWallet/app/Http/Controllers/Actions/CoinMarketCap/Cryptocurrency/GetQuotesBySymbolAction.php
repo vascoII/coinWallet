@@ -3,7 +3,7 @@
 
 namespace App\Http\Controllers\Actions\CoinMarketCap\Cryptocurrency;
 
-use App\Domain\Repositories\Coinbase\TransactionRepository;
+use App\Domain\Repositories\Transverse\TransactionRepository;
 use App\Domain\Repositories\CoinMarketCap\QuoteRepository;
 use App\Http\Responders\CoinMarketCap\GetQuotesBySymbolResponder;
 

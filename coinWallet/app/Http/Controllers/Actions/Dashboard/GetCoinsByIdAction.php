@@ -1,10 +1,10 @@
 <?php
 
 
-namespace App\Http\Controllers\Actions;
+namespace App\Http\Controllers\Actions\Dashboard;
 
-use App\Domain\Repositories\Coinbase\CoinRepository;
-use App\Http\Responders\Coinbase\GetCoinsByIdResponder;
+use App\Domain\Repositories\Transverse\CoinRepository;
+use App\Http\Responders\Dashboard\GetCoinsByIdResponder;
 
 class GetCoinsByIdAction
 {

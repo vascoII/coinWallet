@@ -1,9 +1,9 @@
 <?php
 
 
-namespace App\Http\Responders\Coinbase;
+namespace App\Http\Responders\Dashboard;
 
-use App\Domain\Collections\Coinbase\CoinCollection;
+use App\Domain\Collections\Transverse\CoinCollection;
 use App\Domain\Collections\CoinMarketCap\QuoteCollection;
 use App\Domain\Collections\Utils\AlertInfoCollection;
 use App\Domain\Collections\Utils\PercentTransactionCollection;
@@ -38,7 +38,8 @@ class DashboardResponder
                 'percentCoins' => $percentsCoin->all(),
                 'valueCoins' => $valueCoins->all(),
                 'currentValue' => $currentValue,
-                'alertInfo' => $alertInfoCollection
+                'alertInfo' => $alertInfoCollection,
+                'in_dashboard' => true
             ]
         );
     }

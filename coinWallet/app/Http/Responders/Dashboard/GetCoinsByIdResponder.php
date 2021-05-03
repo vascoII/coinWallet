@@ -1,9 +1,9 @@
 <?php
 
 
-namespace App\Http\Responders\Coinbase;
+namespace App\Http\Responders\Dashboard;
 
-use App\Domain\Entities\Coinbase\Coin;
+use App\Domain\Entities\Transverse\Coin;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -24,6 +24,6 @@ class GetCoinsByIdResponder
             ]);
         }
 
-        return view('coins.index', ['coin' => $coin]);
+        return view('coins.index', ['coin' => $coin, 'in_dashboard' => true]);
     }
 }

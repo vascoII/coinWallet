@@ -1,25 +1,18 @@
 <?php
 
+namespace App\Http\Controllers\Actions\Transverse;
 
-namespace App\Http\Controllers\Actions\Coinbase;
-
-
-use App\Domain\Entities\Coinbase\Transaction;
-use App\Domain\Repositories\Coinbase\CoinRepository;
-use App\Domain\Repositories\Coinbase\TransactionRepository;
-use App\Http\Controllers\Actions\ListTransactionsAction;
-use App\Http\Responders\Coinbase\AddTransactionsResponder;
-use App\Infrastructure\Hydrator\Coinbase\TransactionHydrator;
+use App\Domain\Entities\Transverse\Transaction;
+use App\Domain\Repositories\Transverse\CoinRepository;
+use App\Domain\Repositories\Transverse\TransactionRepository;
+use App\Http\Responders\Transverse\AddTransactionsResponder;
+use App\Infrastructure\Hydrator\Transverse\TransactionHydrator;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
-class AddTransactionsAction
+class AddTransactionsAction extends TransverseAction
 {
     public const EXCHANGE = 'exchange';
-    public array $platform = [
-        'binance' => 'binance',
-        'coinbase' => 'coinbase'
-    ];
 
     public TransactionRepository $transactionRepository;
     public TransactionHydrator $transactionHydrator;
@@ -40,15 +33,16 @@ class AddTransactionsAction
 
     public function __invoke(Request $request)
     {
+        [$platform, $in] = $this->init($request);
         $nextId = $this->transactionRepository->findLastId() + 1;
-        $coinSymbolList = $this->coinRepository->findAllSymbol();
+        $coinSymbolList = $this->transactionRepository->findAllSymbol($platform);
 
         if ($request->isMethod('post')) {
             $transactionCollection = $this->transactionHydrator->hydrateFromRequest($request->all());
             foreach ($transactionCollection->all() as $transaction) {
                 $this->transactionRepository->save($transaction);
             }
-            return redirect()->action([ListTransactionsAction::class]);
+            return redirect()->action([ListTransactionsAction::class], ['platform' => $platform]);
         }
 
         return $this->responder->send(
@@ -61,7 +55,8 @@ class AddTransactionsAction
             ],
             (string) Str::uuid(),
             $coinSymbolList,
-            $this->platform
+            $platform,
+            $in
         );
     }
 

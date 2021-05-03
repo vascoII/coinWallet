@@ -1,8 +1,7 @@
 <?php
 
 
-namespace App\Http\Responders\Coinbase;
-
+namespace App\Http\Responders\Transverse;
 
 use Illuminate\Http\Request;
 
@@ -20,14 +19,16 @@ class AddTransactionsResponder
         array $typeTransaction,
         string $defaultGenerateCode,
         array $coinSymbolList,
-        array $platform
+        string $platform,
+        string $in
     ) {
-        return view('transactions.add', [
+        return view('transverse.transactionadd', [
             'id' => $nextId,
             'typeTransaction' => $typeTransaction,
             'defaultGenerateCode' => $defaultGenerateCode,
             'coinSymbolList' => $coinSymbolList,
-            'platforms' => $platform
+            'platform' => $platform,
+            $in => true
         ]);
     }
 }

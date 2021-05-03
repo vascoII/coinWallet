@@ -16,7 +16,7 @@ class CurrentvalueResponder
     }
 
     public function send(array $chartsData)
-    {echo '<pre>'; var_dump($chartsData);echo '</pre>'; die;
-        return view('coinbase.currentvalue', ['chartsData' => $chartsData]);
+    {
+        return view('coinbase.globalcurrentvalue', ['chartsData' => $chartsData]);
     }
 }

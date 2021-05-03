@@ -1,12 +1,11 @@
 <?php
 
 
-namespace App\Http\Responders\Coinbase;
+namespace App\Http\Responders\Transverse;
 
-use App\Domain\Collections\Coinbase\TransactionCollection;
+use App\Domain\Collections\Transverse\TransactionCollection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 
 class ListTransactionsResponder
 {
@@ -17,7 +16,7 @@ class ListTransactionsResponder
         $this->request = $request;
     }
 
-    public function send(TransactionCollection $transactions)
+    public function send(TransactionCollection $transactions, string $platform, string $in, array $types)
     {
         if ($this->request->expectsJson()) {
             return new JsonResponse([
@@ -25,6 +24,11 @@ class ListTransactionsResponder
             ]);
         }
 
-        return view('transactions.list', ['transactions' => $transactions->all()]);
+        return view('transverse.transactionlist', [
+            'transactions' => $transactions->all(),
+            'platform' => $platform,
+            $in => true,
+            'types' => $types
+        ]);
     }
 }
